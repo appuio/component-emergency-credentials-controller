@@ -1,0 +1,4 @@
+parameters:
+  emergency_credentials_controller:
+    =_metadata: {}
+    namespace: syn-emergency-credentials-controller

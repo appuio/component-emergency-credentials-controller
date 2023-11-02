@@ -1,0 +1,25 @@
+{
+  "template": "https://github.com/projectsyn/commodore-component-template.git",
+  "commit": "913f9693b1c2be92ecaee469fd0fa1bd608f7aaa",
+  "checkout": "main",
+  "context": {
+    "cookiecutter": {
+      "name": "emergency-credentials-controller",
+      "slug": "emergency-credentials-controller",
+      "parameter_key": "emergency_credentials_controller",
+      "test_cases": "defaults",
+      "add_lib": "n",
+      "add_pp": "n",
+      "add_golden": "y",
+      "add_matrix": "y",
+      "add_go_unit": "n",
+      "copyright_holder": "VSHN AG <info@vshn.ch>",
+      "copyright_year": "2023",
+      "github_owner": "appuio",
+      "github_name": "component-emergency-credentials-controller",
+      "github_url": "https://github.com/appuio/component-emergency-credentials-controller",
+      "_template": "https://github.com/projectsyn/commodore-component-template.git"
+    }
+  },
+  "directory": null
+}

@@ -1,0 +1,6 @@
+name: emergency-credentials-controller
+title: emergency-credentials-controller
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/partials/nav.adoc
