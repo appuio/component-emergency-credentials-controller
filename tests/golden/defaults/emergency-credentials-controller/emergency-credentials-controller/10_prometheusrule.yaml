@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations: {}
+  labels:
+    name: emergency-credentials-controller
+  name: emergency-credentials-controller
+  namespace: appuio-emergency-credentials-controller
+spec:
+  groups:
+    - name: credentials.alerts
+      rules:
+        - alert: EmergencyAccountTokenExiring
+          annotations:
+            description: EmergencyAccount token expires in less than one week
+            summary: Renew expiring tokens to avoid losing access to the cluster
+          expr: |
+            (min(emergency_credentials_controller_verified_tokens_valid_until_seconds) by (emergency_account) - time()) < 604800
+          for: 1h
+          labels:
+            severity: critical
+            syn: 'true'
+            syn_component: emergency-credentials-controller
