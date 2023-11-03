@@ -12,7 +12,7 @@ parameters:
       emergency_credentials_controller:
         registry: ghcr.io
         image: appuio/emergency-credentials-controller
-        tag: v0.2.0-dev
+        tag: v0.2.0
       kube_rbac_proxy:
         registry: gcr.io
         image: kubebuilder/kube-rbac-proxy
@@ -28,7 +28,7 @@ parameters:
     emergency_accounts: {}
 
     alerts:
-      EmergencyAccountTokenExiring:
+      EmergencyAccountTokenExpiring:
         enabled: true
         rule:
           expr: |

@@ -10,7 +10,7 @@ spec:
   groups:
     - name: credentials.alerts
       rules:
-        - alert: EmergencyAccountTokenExiring
+        - alert: EmergencyAccountTokenExpiring
           annotations:
             description: EmergencyAccount token expires in less than one week
             summary: Renew expiring tokens to avoid losing access to the cluster
