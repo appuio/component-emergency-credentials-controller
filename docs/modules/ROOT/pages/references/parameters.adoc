@@ -6,14 +6,127 @@ The parent key for all of the following parameters is `emergency_credentials_con
 
 [horizontal]
 type:: string
-default:: `syn-emergency-credentials-controller`
+default:: `appuio-emergency-credentials-controller`
 
 The namespace in which to deploy this component.
 
 
-== Example
+== `namespaceMetadata`
 
+[horizontal]
+type:: dict
+default::
++
 [source,yaml]
 ----
-namespace: example-namespace
+annotations:
+  openshift.io/node-selector: "node-role.kubernetes.io/infra="
+labels:
+  openshift.io/cluster-monitoring: "true"
 ----
+
+Metadata to be added to the namespace.
+
+
+== `images`
+
+[horizontal]
+type:: dictionary
+
+The images to use for this component.
+
+
+== `manifests_version`
+
+[horizontal]
+type:: string
+default:: `${emergency_credentials_controller:images:emergency_credentials_controller:tag}`
+
+The Git reference to the controller deployment manifests.
+The default is the tag of the controller image.
+
+
+== emergency_accounts
+
+[horizontal]
+type:: dict
+default:: `{}`
+example::
++
+[source,yaml]
+----
+emergency_accounts:
+  example:
+    spec:
+      validityDuration: 720h
+      minValidityDurationLeft: 168h
+      tokenStores:
+        - name: secret
+          type: secret
+  no-binding:
+    _create_binding: false
+    spec:
+      validityDuration: 720h
+----
+
+This parameter is used to configure the `EmergencyAccount` objects.
+The dictionary key is used as the name of the `EmergencyAccount` object.
+The value is the configuration of the `EmergencyAccount` object.
+
+The value has an additional key `_create_binding` which is used to control whether a `ClusterRoleBinding` to the ClusterRole defined in `cluster_admin_role` should be created.
+The default is `true`.
+
+See https://github.com/appuio/emergency-credentials-controller for the manifest definition.
+
+
+== `cluster_admin_role`
+
+[horizontal]
+type:: string
+default:: `cluster-admin`
+
+The name of the ClusterRole to bind the `EmergencyAccount` `ServiceAccount` to.
+
+
+== `alerts`
+
+[horizontal]
+type:: dict
+example::
++
+[source,yaml]
+----
+BadThingsHappening:
+  enabled: true
+  rule:
+    annotations:
+      description: Bad things have been happening on {{$labels.node}} for more than 10 minutes.
+      message: Bad things have been happening on {{$labels.node}} for more than 10 minutes.
+      runbook_url: https://hub.syn.tools/emergency-credentials-controller/runbooks/BadThingsHappening.html
+    expr: |
+      bad_thing_happening == 1
+    for: 10m
+    labels:
+      severity: warning
+----
+
+`alerts` defines the alerts to be installed.
+The dictionary key is used as the name of the alert.
+
+
+=== `alerts.<name>.enabled`
+
+[horizontal]
+type:: bool
+
+Defines whether to install the alert.
+
+
+=== `alerts.<name>.rule`
+
+[horizontal]
+type:: dict
+
+Holds the configuration of the alert rule.
+
+See https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/[Prometheus Alerting Rules] for details.

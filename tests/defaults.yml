@@ -1,3 +1,16 @@
 # Overwrite parameters here
 
-# parameters: {...}
+parameters:
+  emergency_credentials_controller:
+    emergency_accounts:
+      example:
+        spec:
+          validityDuration: 720h
+          minValidityDurationLeft: 168h
+          tokenStores:
+            - name: secret
+              type: secret
+      no-binding:
+        _create_binding: false
+        spec:
+          validityDuration: 720h

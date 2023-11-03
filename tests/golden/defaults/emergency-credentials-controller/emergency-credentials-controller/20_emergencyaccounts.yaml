@@ -1,0 +1,25 @@
+apiVersion: cluster.appuio.io/v1beta1
+kind: EmergencyAccount
+metadata:
+  annotations: {}
+  labels:
+    name: example
+  name: example
+  namespace: appuio-emergency-credentials-controller
+spec:
+  minValidityDurationLeft: 168h
+  tokenStores:
+    - name: secret
+      type: secret
+  validityDuration: 720h
+---
+apiVersion: cluster.appuio.io/v1beta1
+kind: EmergencyAccount
+metadata:
+  annotations: {}
+  labels:
+    name: no-binding
+  name: no-binding
+  namespace: appuio-emergency-credentials-controller
+spec:
+  validityDuration: 720h

@@ -1,4 +1,41 @@
 parameters:
   emergency_credentials_controller:
     =_metadata: {}
-    namespace: syn-emergency-credentials-controller
+    namespace: appuio-emergency-credentials-controller
+    namespaceMetadata:
+      annotations:
+        openshift.io/node-selector: "node-role.kubernetes.io/infra="
+      labels:
+        openshift.io/cluster-monitoring: "true"
+
+    images:
+      emergency_credentials_controller:
+        registry: ghcr.io
+        image: appuio/emergency-credentials-controller
+        tag: v0.2.0
+      kube_rbac_proxy:
+        registry: gcr.io
+        image: kubebuilder/kube-rbac-proxy
+        tag: v0.14.1
+
+    manifests_version: ${emergency_credentials_controller:images:emergency_credentials_controller:tag}
+
+    kustomize_input:
+      namespace: ${emergency_credentials_controller:namespace}
+
+    cluster_admin_role: cluster-admin
+
+    emergency_accounts: {}
+
+    alerts:
+      EmergencyAccountTokenExpiring:
+        enabled: true
+        rule:
+          expr: |
+            (min(emergency_credentials_controller_verified_tokens_valid_until_seconds) by (emergency_account) - time()) < 604800
+          for: 1h
+          labels:
+            severity: critical
+          annotations:
+            description: EmergencyAccount token expires in less than one week
+            summary: Renew expiring tokens to avoid losing access to the cluster

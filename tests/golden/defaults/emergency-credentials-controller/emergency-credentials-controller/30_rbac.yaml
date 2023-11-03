@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: appuio-emergency-credentials-controller-view
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+  name: appuio:emergency-credentials-controller:view
+rules:
+  - apiGroups:
+      - cluster.appuio.io
+    resources:
+      - emergencyaccounts
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: appuio-emergency-credentials-controller-edit
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+  name: appuio:emergency-credentials-controller:edit
+rules:
+  - apiGroups:
+      - cluster.appuio.io
+    resources:
+      - emergencyaccounts
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - patch
+      - update
