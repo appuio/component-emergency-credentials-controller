@@ -22,4 +22,9 @@ metadata:
   name: no-binding
   namespace: appuio-emergency-credentials-controller
 spec:
+  tokenStores:
+    - name: ext-s3
+      type: s3
+    - name: secret
+      type: secret
   validityDuration: 720h

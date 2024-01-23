@@ -34,17 +34,30 @@ local alerts = function(name, groupName, alerts)
 
 local emergencyAccounts =
   std.map(
-    function(ea) ea { _create_binding:: super._create_binding },
+    function(ea) ea {
+      // Commodores makeMergeable unhides fields so we hide them after processing
+      _create_binding:: super._create_binding,
+      spec+: {
+        _tokenStores+:: {},
+      },
+    },
     com.generateResources(
       params.emergency_accounts,
-      function(name) kube._Object('cluster.appuio.io/v1beta1', 'EmergencyAccount', name) {
+      function(name) kube._Object('cluster.appuio.io/v1beta1', 'EmergencyAccount', name) + {
+        spec+: {
+          tokenStores+: [],
+          _tokenStores+: {},
+        },
+      } + {
         metadata+: {
           namespace: params.namespace,
+        },
+        spec+: {
+          tokenStores+: std.map(function(k) self._tokenStores[k] { name: k }, std.objectFields(self._tokenStores)),
         },
       },
     )
   );
-
 
 local emergencyAccountBindings = std.filterMap(
   function(name) std.get(params.emergency_accounts[name], '_create_binding', true),

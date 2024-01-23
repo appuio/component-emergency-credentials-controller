@@ -14,3 +14,9 @@ parameters:
         _create_binding: false
         spec:
           validityDuration: 720h
+          tokenStores:
+            - name: secret
+              type: secret
+          _tokenStores:
+            ext-s3:
+              type: s3

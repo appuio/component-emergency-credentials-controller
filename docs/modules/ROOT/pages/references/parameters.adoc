@@ -63,6 +63,21 @@ emergency_accounts:
       tokenStores:
         - name: secret
           type: secret
+      _tokenStores:
+        ext-s3:
+          type: s3
+          s3Store:
+            encryption:
+              encrypt: true
+              pgpKeys: [omitted]
+            s3:
+              endpoint: zrh.example.io
+              bucket: emergency-credentials
+              accessKeyId: nJxvJLuryTpxBVt16La4xEM5ZfAB5fIVPGEPdDrR
+              secretAccessKey: Z9rQrB2QHLEcmCVBqGi8EnKlKUfUcQ6PrfXnjenH
+            objectNameTemplate: "em-{{ .Context.ClusterId | sha256sum }}"
+            objectNameTemplateContext:
+              ClusterId: ${cluster:name}
   no-binding:
     _create_binding: false
     spec:
@@ -75,6 +90,10 @@ The value is the configuration of the `EmergencyAccount` object.
 
 The value has an additional key `_create_binding` which is used to control whether a `ClusterRoleBinding` to the ClusterRole defined in `cluster_admin_role` should be created.
 The default is `true`.
+
+The `_tokenStores` keys is a helper to hierarchically configure the `tokenStores` key.
+It's a dictionary where the key is the name of the `tokenStore` and the value is the configuration of the `tokenStore`.
+The resulting configurations are appended to the `tokenStores` key.
 
 See https://github.com/appuio/emergency-credentials-controller for the manifest definition.
 
