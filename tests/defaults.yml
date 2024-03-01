@@ -20,3 +20,13 @@ parameters:
           _tokenStores:
             ext-s3:
               type: s3
+
+    controller_deployment_patch:
+      spec:
+        template:
+          spec:
+            containers:
+              - name: manager
+                env:
+                  - name: MY_ENV
+                    value: test

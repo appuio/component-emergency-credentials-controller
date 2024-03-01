@@ -23,6 +23,8 @@ parameters:
     kustomize_input:
       namespace: ${emergency_credentials_controller:namespace}
 
+    controller_deployment_patch: {}
+
     cluster_admin_role: cluster-admin
 
     emergency_accounts: {}

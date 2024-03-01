@@ -27,6 +27,15 @@ local removeUpstreamAlerts = {
   },
 };
 
+local deploymentPatch = {
+  apiVersion: 'apps/v1',
+  kind: 'Deployment',
+  metadata: {
+    name: 'controller-manager',
+    namespace: upstreamNamespace,
+  },
+} + com.makeMergeable(params.controller_deployment_patch);
+
 local patch = function(p) {
   patch: std.manifestJsonMinified(p),
 };
@@ -50,6 +59,7 @@ com.Kustomization(
     patches+: [
       patch(removeUpstreamNamespace),
       patch(removeUpstreamAlerts),
+      patch(deploymentPatch),
     ],
     labels+: [
       {
