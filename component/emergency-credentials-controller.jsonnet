@@ -36,6 +36,18 @@ local deploymentPatch = {
   },
 } + com.makeMergeable(params.controller_deployment_patch);
 
+local setPriorityClass = {
+  patch: |||
+    - op: add
+      path: "/spec/template/spec/priorityClassName"
+      value: "system-cluster-critical"
+  |||,
+  target: {
+    kind: 'Deployment',
+    name: 'emergency-credentials-controller-controller-manager',
+  },
+};
+
 local patch = function(p) {
   patch: std.manifestJsonMinified(p),
 };
@@ -60,6 +72,7 @@ com.Kustomization(
       patch(removeUpstreamNamespace),
       patch(removeUpstreamAlerts),
       patch(deploymentPatch),
+      setPriorityClass,
     ],
     labels+: [
       {
