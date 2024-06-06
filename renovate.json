@@ -17,5 +17,18 @@
   "suppressNotifications": [ "artifactErrors" ],
   "labels": [
     "dependency"
+  ],
+  "separateMinorPatch": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "!/^v?0\\./",
+      "automerge": true,
+      "platformAutomerge": false,
+      "labels": [
+        "dependency",
+        "automerge"
+      ]
+    }
   ]
 }
