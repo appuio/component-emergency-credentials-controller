@@ -5,6 +5,10 @@ local argocd = import 'lib/argocd.libjsonnet';
 
 local app = argocd.App('emergency-credentials-controller', params.namespace);
 
+local appPath =
+  local project = std.get(app, 'spec', { project: 'syn' }).project;
+  if project == 'syn' then 'apps' else 'apps-%s' % project;
+
 {
-  'emergency-credentials-controller': app,
+  ['%s/emergency-credentials-controller' % appPath]: app,
 }

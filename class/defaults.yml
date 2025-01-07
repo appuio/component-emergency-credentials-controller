@@ -1,6 +1,7 @@
 parameters:
   emergency_credentials_controller:
-    =_metadata: {}
+    =_metadata:
+      multi_tenant: true
     namespace: appuio-emergency-credentials-controller
     namespaceMetadata:
       annotations:
