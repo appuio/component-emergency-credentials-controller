@@ -13,7 +13,7 @@ parameters:
       emergency_credentials_controller:
         registry: ghcr.io
         image: appuio/emergency-credentials-controller
-        tag: v0.4.0
+        tag: v0.4.1
       kube_rbac_proxy:
         registry: gcr.io
         image: kubebuilder/kube-rbac-proxy
