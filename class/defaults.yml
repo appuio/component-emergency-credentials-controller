@@ -15,9 +15,9 @@ parameters:
         image: appuio/emergency-credentials-controller
         tag: v0.4.1
       kube_rbac_proxy:
-        registry: gcr.io
-        image: kubebuilder/kube-rbac-proxy
-        tag: v0.14.1
+        registry: quay.io
+        image: brancz/kube-rbac-proxy
+        tag: v0.18.2
 
     manifests_version: ${emergency_credentials_controller:images:emergency_credentials_controller:tag}
 
